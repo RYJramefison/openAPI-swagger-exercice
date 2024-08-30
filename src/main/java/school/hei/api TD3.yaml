@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Meals API
+  description: API to manage meals
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+paths:
+  '/meals':
+    get:
+      tags:
+        - Meals
+      summary: Get all meals
+      operationId: getAllMeals
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of meals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meal'
+    post:
+      tags:
+        - Meals
+      summary: Create a new meal
+      operationId: createMeal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meal'
+      responses:
+        '201':
+          description: Meal created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+    put:
+      tags:
+        - Meals
+      summary: Update an existing meal
+      operationId: updateMeal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meal'
+      responses:
+        '200':
+          description: Meal updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+    delete:
+      tags:
+        - Meals
+      summary: Delete a meal
+      operationId: deleteMeal
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Meal deleted successfully
+components:
+  schemas:
+    Meal:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        available:
+          type: boolean
